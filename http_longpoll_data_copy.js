@@ -1,21 +1,14 @@
-///KEEP THIS ONE CLEAN, SHOULD BE USED ON BOTH node AND browser side ...
-
-function LongPollDataCopy (client_config, hook_functions) {
-	var data = undefined;
-
-	function create_data (d) {
-		console.log('WILL CREATE DATA');
-	}
+function HTTPLongPollDataCopy (url, cb_map) {
+	this.datacpy = new Collection();
+	var sbs = this.datacpy.subscribe_bunch(cb_map);
+	var self = this;
 
 	this.go = function () {
-		var client  = new HTTP_LongPollClient(client_config, {
+		var client = new HTTP_LongPollClient (url, {
 			buffer_ready : function (consumer) {
-				var u;
+				var u ;
 				while (u = consumer.next()){
-					if (u.is_init) {
-						create_data(d.data);
-						continue;
-					}
+					self.datacpy.commit(u);
 				}
 			}
 		});
