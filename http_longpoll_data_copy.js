@@ -1,3 +1,4 @@
+// stable version
 function HTTPLongPollDataCopy (url, cb_map) {
 	this.datacpy = new Collection();
 	var sbs = this.datacpy.subscribe_bunch(cb_map);
